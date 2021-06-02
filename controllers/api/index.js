@@ -1,7 +1,9 @@
 const router = require('express').Router();
 
-// const ____ = require('./____');
+const userRoutes = require('./user-routes');
+const journalEntryRoutes = require('./journal-entry-routes');
 
-// router.use('/____', _____);
+router.use('/users', userRoutes);
+router.use('/journalentries', journalEntryRoutes);
 
 module.exports = router;
