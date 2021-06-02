@@ -1,0 +1,5 @@
+-- DROP DATABASE
+DROP DATABASE IF EXISTS life_balance_db;
+
+-- CREATE DATABASE
+CREATE DATABASE life_balance_db;
