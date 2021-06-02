@@ -10,8 +10,6 @@ async function newEntryHandler(event) {
         window.location.toString().split('/').length - 1
     ];
 
-    // user_id will be in the post-routes.js in router.post's session
-
     const response = await fetch(`/api/journalentries/${id}`, {
         method: 'PUT',
         body: JSON.stringify({
