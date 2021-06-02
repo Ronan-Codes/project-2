@@ -69,7 +69,9 @@ router.get('/journalentry/:id', withAuth, (req, res) => {
 })
 
 router.get('/newjournalentry', (req, res) => {
-    res.render('newjournalentry')
+    res.render('newjournalentry', {
+        loggedIn: req.session.loggedIn
+    })
 })
 
 module.exports = router;

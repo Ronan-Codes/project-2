@@ -10,7 +10,7 @@
     </div>
 
     <div class="form-grateful-wrapper row justify-content-around col-12 mb-5">
-        <form class="form-grateful col-12 row justify-content-center">
+        <form class="update-form col-12 row justify-content-center">
             <div class="col-12">3 things you're grateful for. . . </div>
             <div class="form-group col-9 row">
                 <span class="col-2"><label for="first-grateful-input">1. </label></span>
@@ -20,17 +20,17 @@
             <div class="form-group col-9 row">
                 <span class="col-2"><label for="second-grateful-input">2. </label></span>
                 <span class="col-9"><input id="second-grateful-input" class="form-control form-control-sm" type="text"
-                        placeholder=""></span>
+                        placeholder="" value="{{journalEntry.second_grateful_input}}"></span>
             </div>
             <div class="form-group col-9 row">
                 <span class="col-2"><label for="third-grateful-input">3. </label></span>
                 <span class="col-9"><input id="third-grateful-input" class="form-control form-control-sm" type="text"
-                        placeholder=""></span>
+                        placeholder="" value="{{journalEntry.third_grateful_input}}"></span>
             </div>
 
             <div class="col-12">Freewrite</div>
             <div class="form-group col-9">
-                <textarea class="form-control" id="freewrite-input" rows="4"></textarea>
+                <textarea class="form-control" id="freewrite-input" rows="4">{{journalEntry.freewrite_input}}</textarea>
             </div>
 
             <div class="col-12">Overall Mood</div>
@@ -48,9 +48,20 @@
             </div>
 
             <div class="col-12 mt-3">
-                <button type="submit" class="btn-md btn-light p-1 rounded">Submit</button>
+                <button type="click" class="btn-md btn-light p-1 mr-1 rounded col-1" id="back-btn">Back</button>
+                <button type="submit" class="btn-md btn-light p-1 ml-1 rounded col-1">Update</button>
             </div>
 
         </form>
     </div>
 </main>
+
+<script src="/javascript/update-journal-entry.js"></script>
+<script src="/javascript/back.js"></script>
+
+{{!--
+{{#if_eq journalEntry.mood_input 'happy' 'checked'}}
+{{#if_eq journalEntry.mood_input 'neutral' 'checked'}}
+{{#if_eq journalEntry.mood_input 'sad' 'checked'}}
+Check how to do this after finishing MVP
+--}}
