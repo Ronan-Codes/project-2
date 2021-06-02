@@ -53,3 +53,5 @@ sequelize.sync({
 }).then(() => {
     app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
 })
+
+// heroku site: https://workout-life-balance.herokuapp.com/
