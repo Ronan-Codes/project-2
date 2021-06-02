@@ -9,7 +9,7 @@ const withAuth = require('../../utils/auth');
 router.get('/', (req, res) => {
     JournalEntry.findAll({
             attributes: [
-                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'created_at'
+                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'created_at', 'user_id'
             ],
             // display data in descending order based on `created_at`
             order: [
