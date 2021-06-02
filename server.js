@@ -47,7 +47,7 @@ app.use(routes);
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use statements END
 
-// sync sequelize models to the database, then turn on the server
+// // sync sequelize models to the database, then turn on the server
 sequelize.sync({
     force: false
 }).then(() => {
