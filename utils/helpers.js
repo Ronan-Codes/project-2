@@ -11,7 +11,25 @@ module.exports = {
     } else {
       return;
     };
-  }
+  },
+
+  check_happy: mood_input => {
+    if (mood_input == "happy") {
+      return "checked"
+    }
+  },
+
+  check_neutral: mood_input => {
+    if (mood_input == "neutral") {
+      return "checked"
+    }
+  },
+
+  check_sad: mood_input => {
+    if (mood_input == "sad") {
+      return "checked"
+    }
+  },
 
   // ,
   // format_url: url => {

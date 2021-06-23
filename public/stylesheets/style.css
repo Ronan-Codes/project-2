@@ -28,7 +28,7 @@ body {
     /* padding-top: 8% */
 }
 
-.login-wrapper, .journal-entry-wrapper, .dashboard-wrapper {
+.login-wrapper, .dashboard-entry-wrapper {
     background-color: rgba(41, 41, 41, 0.664);
 }
 
@@ -37,6 +37,10 @@ body {
     width: 90%;
     overflow: scroll;
     overflow-x: hidden;
+}
+
+#logout-btn {
+    text-decoration: none;
 }
 
 

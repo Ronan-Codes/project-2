@@ -18,7 +18,7 @@ async function loginFormHandler(event) {
 
     if (response.ok) {
       // redirect to dashboard when logged in, instead of '/'
-      document.location.replace('/dashboard');
+      document.location.replace('/dashboard/home');
     } else {
       alert(response.statusText);
     }
@@ -46,7 +46,7 @@ async function signupFormHandler(event) {
     });
 
     if (response.ok) {
-      document.location.replace('/login');
+      document.location.replace('/');
     } else {
       alert(response.statusText);
     }

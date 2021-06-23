@@ -3,7 +3,12 @@ const sequelize = require('../config/connection');
 const { User, JournalEntry } = require('../models');
 const withAuth = require('../utils/auth')
 
-router.get('/', withAuth, (req, res) => {
+router.get('/home', withAuth, (req, res) => {
+    if (!req.session.loggedIn) {
+        res.redirect('/');
+        return;
+      }
+
     JournalEntry.findAll({
             where: {
                 // use the ID from the session
