@@ -4,10 +4,22 @@ $(document).ready(function () {
     // have the "datepicker" class set
     $('#datepicker').Zebra_DatePicker({
         always_visible: $('.datepickerContainer'),
-        onSelect: function (one, two, three) {
-            alert(one);
+        onSelect: function (reg_date, date_time, js_date) {
 
-            document.location.replace(`/journal/${one}`);
+            async function deleteFormHandler() {
+
+                const response = await fetch(`/api/journalentries/${reg_date}`, {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    document.location.replace(`/dashboard/journalentry/${reg_date}`);
+                } else {
+                    document.location.replace(`/dashboard/newjournalentry`);
+                }
+            }
+
+            deleteFormHandler()
 
         }
     })

@@ -38,13 +38,22 @@ JournalEntry.init(
                 model: 'user',
                 key: 'id'
             }
+        },
+        reg_date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false
+            // ,
+            // get: function() {
+            //     return moment.utc(this.getDataValue('regDate')).format('YYYY-MM-DD');
+            // }
         }
     },
     {
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'journalentry'
+        modelName: 'journalentry',
+        timestamps: false
     }
 );
 

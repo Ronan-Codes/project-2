@@ -15,10 +15,10 @@ router.get('/home', withAuth, (req, res) => {
                 user_id: req.session.user_id
             },
             attributes: [
-                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'created_at', 'user_id'
+                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'user_id', 'reg_date'
             ],
             order: [
-                ['created_at', 'DESC']
+                ['reg_date', 'DESC']
             ],
             include: [{
                 model: User,
@@ -40,14 +40,14 @@ router.get('/home', withAuth, (req, res) => {
         });
 });
 
-router.get('/journalentry/:id', withAuth, (req, res) => {
+router.get('/journalentry/:reg_date', withAuth, (req, res) => {
     JournalEntry.findOne({
         where: {
             // use the ID from the session
-            id: req.params.id
+            reg_date: req.params.reg_date
         },
         attributes: [
-            'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'created_at', 'user_id'
+            'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'user_id', 'reg_date'
         ],
         include: [{
             model: User,
@@ -55,7 +55,7 @@ router.get('/journalentry/:id', withAuth, (req, res) => {
     })
     .then(dbJournalEntryData => {
         if (!dbJournalEntryData) {
-          res.status(404).json({ message: 'No journal entry found with this id' });
+          res.status(404).json({ message: 'No journal entry found with this date' });
           return;
         }
 

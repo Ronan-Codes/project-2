@@ -6,11 +6,11 @@ async function newEntryHandler(event) {
     const third_grateful_input = document.querySelector('#third-grateful-input').value;
     const freewrite_input = document.querySelector('#freewrite-input').value;
     const mood_input = document.querySelector("input[name='mood-input']:checked").value;
-    const id = window.location.toString().split('/')[
+    const reg_date = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
 
-    const response = await fetch(`/api/journalentries/${id}`, {
+    const response = await fetch(`/api/journalentries/${reg_date}`, {
         method: 'PUT',
         body: JSON.stringify({
             first_grateful_input,

@@ -7,6 +7,11 @@ async function newEntryHandler(event) {
     const freewrite_input = document.querySelector('#freewrite-input').value;
     const mood_input = document.querySelector("input[name='mood-input']:checked").value;
 
+    // convert to utc?
+    const today = new Date();
+    const reg_date = today.toISOString().split('T')[0];
+
+
     // user_id will be in the post-routes.js in router.post's session
 
     const response = await fetch('/api/journalentries', {
@@ -17,6 +22,7 @@ async function newEntryHandler(event) {
             third_grateful_input,
             freewrite_input,
             mood_input,
+            reg_date
         }),
         headers: {
             'Content-Type': 'application/json'

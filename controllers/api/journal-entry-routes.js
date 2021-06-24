@@ -9,11 +9,11 @@ const withAuth = require('../../utils/auth');
 router.get('/', (req, res) => {
     JournalEntry.findAll({
             attributes: [
-                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'created_at', 'user_id'
+                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'user_id', 'reg_date'
             ],
-            // display data in descending order based on `created_at`
+            // display data in descending order based on `reg_date`
             order: [
-                ['created_at', 'DESC']
+                ['reg_date', 'DESC']
             ],
             include: [{
                 model: User,
@@ -27,13 +27,13 @@ router.get('/', (req, res) => {
 });
 // watch video at 13.3.6 to review process of include (JOIN)
 
-router.get('/:id', (req, res) => {
+router.get('/:reg_date', (req, res) => {
     JournalEntry.findOne({
             where: {
-                id: req.params.id
+                reg_date: req.params.reg_date
             },
             attributes: [
-                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'created_at', 'user_id'
+                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'user_id', 'reg_date'
             ],
             include: [{
                 model: User,
@@ -61,7 +61,8 @@ router.post('/', withAuth, (req, res) => {
             third_grateful_input: req.body.third_grateful_input,
             freewrite_input: req.body.freewrite_input,
             mood_input: req.body.mood_input,
-            user_id: req.session.user_id
+            user_id: req.session.user_id,
+            reg_date: req.body.reg_date
         })
         .then(dbJournalEntryData => res.json(dbJournalEntryData))
         .catch(err => {
@@ -71,10 +72,10 @@ router.post('/', withAuth, (req, res) => {
 });
 
 
-router.put('/:id', withAuth, (req, res) => {
+router.put('/:reg_date', withAuth, (req, res) => {
     JournalEntry.update(req.body, {
             where: {
-                id: req.params.id
+                reg_date: req.params.reg_date
             }
         })
         .then(dbJournalEntryData => {
@@ -92,10 +93,10 @@ router.put('/:id', withAuth, (req, res) => {
         });
 });
 
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:reg_date', withAuth, (req, res) => {
     JournalEntry.destroy({
             where: {
-                id: req.params.id
+                reg_date: req.params.reg_date
             }
         })
         .then(dbJournalEntryData => {
