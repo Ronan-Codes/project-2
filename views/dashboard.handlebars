@@ -5,6 +5,10 @@
         </h2>
     </div>
 
+    <div class="col-12 datepickerContainer">
+    <input type="text" id="datepicker" class="col-12">
+    </div>
+
     <div id="entries-list-wrapper" class="col-8 rounded mb-5 bg-light px-0">
         <div class="list-group rounded" id="entries-list">
             {{#each journalEntries}}
@@ -21,4 +25,9 @@
     </div>
 </main>
 
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/zebra_datepicker@latest/dist/zebra_datepicker.min.js"></script>
+
 <script src="/javascript/dashboard.js"></script>
+<script src="/javascript/calendar.js"></script>
