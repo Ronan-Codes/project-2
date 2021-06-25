@@ -9,7 +9,11 @@ async function newEntryHandler(event) {
 
     // convert to utc?
     const today = new Date();
-    const reg_date = today.toISOString().split('T')[0];
+    const reformatNewDate = (date) => {
+        const 
+    }
+
+    reformatNewDate(today);
 
 
     // user_id will be in the post-routes.js in router.post's session

@@ -64,7 +64,12 @@ body {
 	background-color: #e7e7e7;
 }
 
+/* zebra_calendar custom styles */
 .Zebra_DatePicker {
     font-size: 2em;
     /* width: 500px; */
+}
+
+.Zebra_DatePicker .dp_daypicker td.myclass1 {
+    background-color: rgba(252, 226, 80, 0.89);
 }
