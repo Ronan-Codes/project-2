@@ -7,13 +7,12 @@ async function newEntryHandler(event) {
     const freewrite_input = document.querySelector('#freewrite-input').value;
     const mood_input = document.querySelector("input[name='mood-input']:checked").value;
 
-    // convert to utc?
-    const today = new Date();
-    const reformatNewDate = (date) => {
-        const 
-    }
 
-    reformatNewDate(today);
+    const reformatNewDate = () => {
+        // const year = today.
+        return `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
+    }
+    const reg_date = reformatNewDate();
 
 
     // user_id will be in the post-routes.js in router.post's session
