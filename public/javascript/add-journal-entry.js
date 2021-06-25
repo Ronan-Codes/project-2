@@ -8,11 +8,11 @@ async function newEntryHandler(event) {
     const mood_input = document.querySelector("input[name='mood-input']:checked").value;
 
 
-    const reformatNewDate = () => {
-        // const year = today.
-        return `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
-    }
-    const reg_date = reformatNewDate();
+    // const reformatNewDate = () => {
+    //     // const year = today.
+    //     return `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
+    // }
+    const reg_date = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
 
 
     // user_id will be in the post-routes.js in router.post's session
