@@ -49,7 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // // sync sequelize models to the database, then turn on the server
 sequelize.sync({
-    force: false
+    force: true
 }).then(() => {
     app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
 })
