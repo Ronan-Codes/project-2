@@ -82,8 +82,6 @@ body {
     background-color: rgba(252, 226, 80, 0.89);
 }
 
-
-
 @media screen and (max-width: 576px) {
     #dashboard-wrapper {
         width: 95%;
@@ -103,7 +101,26 @@ body {
 
 @media screen and (min-width: 768px) {
     .Zebra_DatePicker {
-        font-size: 1.2em;
         padding-bottom: 0;
+    }
+
+    .wrapper {
+        height: 100vh; //vh - viewport height
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+    }
+
+    #logout-btn {
+        position: absolute;
+        top: 15px;
+        right: 50px;
+        font-size: 1.1em;
+
+    }
+
+    #freewrite-input{
+        height: 200px;
     }
 }
