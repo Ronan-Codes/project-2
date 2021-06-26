@@ -1,15 +1,15 @@
-<main class="dashboard-entry-wrapper col-11 col-md-8 row justify-content-center text-center py-5 mt-0 text-light rounded">
-    <div class="col-12 mb-4">
+<main id="dashboard-wrapper" class="dashboard-entry-wrapper col-11 col-md-10 row justify-content-center text-center py-3 mt-0 text-light rounded">
+    <div class="col-12">
         <h2 class="">
             Journal Entries
         </h2>
     </div>
 
-    <div class="col-12 datepickerContainer">
-    <input type="text" id="datepicker" class="col-12">
+    <div class="col-12 col-sm-10 col-md-7 col-xxl-6 datepickerContainer row">
+        <div type="text" id="datepicker" class="col-12"></div>
     </div>
 
-    <div id="entries-list-wrapper" class="col-8 rounded mb-5 bg-light px-0">
+    {{!-- <div id="entries-list-wrapper" class="col-8 rounded mb-5 bg-light px-0">
         <div class="list-group rounded" id="entries-list">
             {{#each journalEntries}}
             <a href="/dashboard/journalentry/{{id}}" class="list-group-item list-group-item-action list-group-item-info"
@@ -18,16 +18,16 @@
             </a>
             {{/each}}
         </div>
-    </div>
+    </div> --}}
 
-    <div class="col-12 pb-4">
+    <div class="col-12 mt-3">
         <button type="button" class="btn-md btn-light p-1 rounded" id="new-entry-btn">New Entry</button>
     </div>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/zebra_datepicker@latest/dist/zebra_datepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/zebra_datepicker@latest/dist/zebra_datepicker.min.js"></script>
 
 <script src="/javascript/dashboard.js"></script>
 <script src="/javascript/calendar.js"></script>
