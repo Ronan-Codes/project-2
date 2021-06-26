@@ -75,20 +75,23 @@ body {
     margin-right: auto;
 
     position: relative;
-    bottom: 20px
+    bottom: 60px
 }
 
 .Zebra_DatePicker .dp_daypicker td.myclass1 {
     background-color: rgba(252, 226, 80, 0.89);
 }
 
-@media screen and (max-width: 405px) {
+
+
+@media screen and (max-width: 576px) {
     #dashboard-wrapper {
         width: 95%;
     }
 
     .Zebra_DatePicker {
         font-size: 1em;
+        bottom: 65px;
     }
 }
 
@@ -101,5 +104,6 @@ body {
 @media screen and (min-width: 768px) {
     .Zebra_DatePicker {
         font-size: 1.2em;
+        padding-bottom: 0;
     }
 }
