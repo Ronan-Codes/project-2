@@ -1,3 +1,8 @@
+// console.log(document.session.user_id)
+// console.log(journalEntries)
+const id = document.getElementById('userIdContainer').getAttribute('data-id')
+console.log(id)
+
 var yesBtn = document.getElementById('yesBtn');
 
 var formattedDatesArr = []
@@ -52,7 +57,7 @@ async function selectDayEntry(date_input, js_date) {
         const month = js_date.toString().split(' ')[1];
         const date = js_date.toString().split(' ')[2];
         const year = js_date.toString().split(' ')[3];
-        const dateforModal = `${month} ${date}, ${year}.`
+        const dateforModal = `${month} ${date}, ${year}?`
         const reg_date = `${js_date.getFullYear()}-${js_date.getMonth() + 1}-${js_date.getDate()}`
 
         document.getElementById('modalDate').innerHTML = `${dateforModal}`
@@ -71,12 +76,12 @@ async function selectDayEntry(date_input, js_date) {
 
 async function formattedDate(event) {
 
-    const response = await fetch(`/api/journalentries/`, {
-        method: 'GET',
+    const response = await fetch(`/api/users/${id}`, {
+        method: 'GET'
     });
 
     if (response.ok) {
-        response.json().then(function (journalEntries) {
+        response.json().then(function (user) {
             // Keep comments for now, in case calendar functionality is reverted
             // if (journalEntries.length == 0) {
             //     $('#datepicker').Zebra_DatePicker({
@@ -92,11 +97,19 @@ async function formattedDate(event) {
             //         }
             //     })
             // } else {
+                // console.log(req.session.user_id)
                 // for loop or map each journalEntries
-                journalEntries.map(journalDate => {
-                    const formattedDate = reformatDate(journalDate.reg_date);
+
+
+                journal_entries = user.journalentries
+                console.log(journal_entries)
+
+                journal_entries.map(journalEntry => {
+                    const formattedDate = reformatDate(journalEntry.reg_date);
                     formattedDatesArr.push(formattedDate)
                 })
+
+
                 // let formattedAndToday = formattedDatesArr.push(...startDate)
 
                 $('#datepicker').Zebra_DatePicker({

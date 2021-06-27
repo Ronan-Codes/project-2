@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
       },
       include: [{
         model: JournalEntry,
-        attributes: ['id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'reg_date'],
+        attributes: ['id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'user_id', 'reg_date'],
         order: [
           ['reg_date', 'DESC']
         ]
@@ -113,7 +113,6 @@ router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();
-      alert("logged out")
     });
   } else {
     res.status(404).end();
