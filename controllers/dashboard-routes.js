@@ -73,7 +73,13 @@ router.get('/journalentry/:reg_date', withAuth, (req, res) => {
       });
 })
 
-router.get('/newjournalentry', (req, res) => {
+// router.get('/newjournalentry', (req, res) => {
+//     res.render('newjournalentry', {
+//         loggedIn: req.session.loggedIn
+//     })
+// })
+
+router.get('/newjournalentry/:reg_date', (req, res) => {
     res.render('newjournalentry', {
         loggedIn: req.session.loggedIn
     })
