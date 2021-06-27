@@ -1,4 +1,3 @@
-// $(document).ready(function () {
 var yesBtn = document.getElementById('yesBtn');
 
 var formattedDatesArr = []
@@ -27,6 +26,16 @@ function formatToday() {
 }
 
 const startDate = [reformatDate(formatToday())]
+
+function todayOrNew(array) {
+    if (array.includes(...startDate)) {
+        return "Today's Entry"
+    }
+
+    else if (!formattedDatesArr.includes(...startDate)) {
+        return "New Entry"
+    }
+}
 
 // Modal Script
 var myModal = new bootstrap.Modal(document.getElementById('chosenDateModal'), {
@@ -58,7 +67,7 @@ async function selectDayEntry(date_input, js_date) {
         document.location.replace(`/dashboard/journalentry/${date_input}`);
     }
 }
-
+// Modal Script End
 
 async function formattedDate(event) {
 
@@ -68,35 +77,34 @@ async function formattedDate(event) {
 
     if (response.ok) {
         response.json().then(function (journalEntries) {
-            if (journalEntries.length == 0) {
-                $('#datepicker').Zebra_DatePicker({
-                    show_select_today: "Today's Entry",
-                    show_clear_date: false,
-                    always_visible: $('.datepickerContainer'),
-                    // disabled_dates: ['* * *'],
-                    // enabled_dates: startDate,
-                    onSelect: function (reg_date, date_time, js_date) {
-                        // selectDayEntry(reg_date)
-                        document.location.replace(`/dashboard/newjournalentry`);
+            // Keep comments for now, in case calendar functionality is reverted
+            // if (journalEntries.length == 0) {
+            //     $('#datepicker').Zebra_DatePicker({
+            //         show_select_today: "Today's Entry",
+            //         show_clear_date: false,
+            //         always_visible: $('.datepickerContainer'),
+            //         // disabled_dates: ['* * *'],
+            //         // enabled_dates: startDate,
+            //         onSelect: function (reg_date, date_time, js_date) {
+            //             // selectDayEntry(reg_date)
+            //             document.location.replace(`/dashboard/newjournalentry`);
 
-                    }
-                })
-            } else {
+            //         }
+            //     })
+            // } else {
                 // for loop or map each journalEntries
                 journalEntries.map(journalDate => {
                     const formattedDate = reformatDate(journalDate.reg_date);
                     formattedDatesArr.push(formattedDate)
                 })
                 // let formattedAndToday = formattedDatesArr.push(...startDate)
-                // console.log(formattedDatesArr)
 
                 $('#datepicker').Zebra_DatePicker({
-                    show_select_today: "Today's Entry",
+                    show_select_today: todayOrNew(formattedDatesArr),
                     show_clear_date: false,
                     always_visible: $('.datepickerContainer'),
                     // disabled_dates: ['* * *'],
                     // enabled_dates: formattedDatesArr,
-
                     custom_classes: {
                         'myclass1': formattedDatesArr
                     },
@@ -104,88 +112,11 @@ async function formattedDate(event) {
                         selectDayEntry(reg_date, js_date)
                     }
                 })
-            }
-
+            // }
         })
     } else {
         alert(response.statusText);
     }
 }
 
-
 formattedDate()
-
-
-// const arrayContents = (array) => {
-//     array.map(eachFormattedDate => {
-//         console.log(eachFormattedDate)
-//         return eachFormattedDate
-//     })
-// }
-// arrayContents(formattedDatesArr)
-// console.log(arrayContents(formattedDatesArr))
-
-// assuming the controls you want to attach the plugin to
-// have the "datepicker" class set
-// const activateCalendate = () => {
-
-
-//     $('#datepicker').Zebra_DatePicker({
-//         always_visible: $('.datepickerContainer'),
-//         // disabled_dates: ['25 6 2021'],
-//         custom_classes: {
-//             'myclass1':  formattedDatesArr
-//         },
-//         onSelect: function (reg_date, date_time, js_date) {
-
-//             async function selectDayEntry() {
-
-//                 const response = await fetch(`/api/journalentries/${reg_date}`, {
-//                     method: 'GET'
-//                 });
-
-//                 if (response.ok) {
-//                     document.location.replace(`/dashboard/journalentry/${reg_date}`);
-//                 } else {
-//                     document.location.replace(`/dashboard/newjournalentry`);
-//                 }
-//             }
-
-//             selectDayEntry()
-
-//         }
-//     })
-// }
-
-// $('#datepicker').Zebra_DatePicker({
-//     always_visible: $('.datepickerContainer'),
-//     // disabled_dates: ['25 6 2021'],
-//     custom_classes: {
-//         'myclass1':  formattedDatesArr
-//     },
-//     onSelect: function (reg_date, date_time, js_date) {
-
-//         async function selectDayEntry() {
-
-//             const response = await fetch(`/api/journalentries/${reg_date}`, {
-//                 method: 'GET'
-//             });
-
-//             if (response.ok) {
-//                 document.location.replace(`/dashboard/journalentry/${reg_date}`);
-//             } else {
-//                 document.location.replace(`/dashboard/newjournalentry`);
-//             }
-//         }
-
-//         selectDayEntry()
-
-//     }
-// })
-
-
-// To get a reference to the instance of Zebra DatePicker attached to an element do:
-// var datepicker = $('#datepicker').data('Zebra_DatePicker');
-// datepicker.attr("data-zdp_always_visible", $('.datepickerContainer'))
-
-// });
