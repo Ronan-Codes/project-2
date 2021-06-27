@@ -25,7 +25,7 @@ JournalEntry.init(
             allowNull: true
         },
         freewrite_input: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: true
         },
         mood_input: {
