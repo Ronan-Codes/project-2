@@ -1,7 +1,5 @@
-// console.log(document.session.user_id)
-// console.log(journalEntries)
 const id = document.getElementById('userIdContainer').getAttribute('data-id')
-console.log(id)
+// console.log(id)
 
 var yesBtn = document.getElementById('yesBtn');
 
@@ -16,8 +14,8 @@ const reformatDate = (date) => {
     return `${day} ${month} ${year}`;
 }
 
-function formatToday() {
-    var d = new Date(),
+function formatToday(date) {
+    var d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
@@ -30,7 +28,8 @@ function formatToday() {
     return [year, month, day].join('-');
 }
 
-const startDate = [reformatDate(formatToday())]
+const startDate = [reformatDate(formatToday(new Date))]
+// console.log(startDate)
 
 function todayOrNew(array) {
     if (array.includes(...startDate)) {
@@ -47,30 +46,86 @@ var myModal = new bootstrap.Modal(document.getElementById('chosenDateModal'), {
     keyboard: false
 })
 
-async function selectDayEntry(date_input, js_date) {
+var arraysMatch = function (arr1, arr2) {
+    // Check if the arrays are the same length
+    if (arr1.length !== arr2.length) return false;
 
-    const response = await fetch(`/api/journalentries/${date_input}`, {
-        method: 'GET'
-    });
-
-    if (!response.ok) {
-        const month = js_date.toString().split(' ')[1];
-        const date = js_date.toString().split(' ')[2];
-        const year = js_date.toString().split(' ')[3];
-        const dateforModal = `${month} ${date}, ${year}?`
-        const reg_date = `${js_date.getFullYear()}-${js_date.getMonth() + 1}-${js_date.getDate()}`
-
-        document.getElementById('modalDate').innerHTML = `${dateforModal}`
-        myModal.toggle()
-
-        yesBtn.addEventListener('click', function () {
-            document.location.replace(`/dashboard/newjournalentry/${reg_date}`);
-        })
-
-        return
-    } else {
-        document.location.replace(`/dashboard/journalentry/${date_input}`);
+    // Check if all items exist and are in the same order
+    for (var i = 0; i < arr1.length; i++) {
+        if (arr1[i] !== arr2[i]) return false;
     }
+
+    return true;
+
+};
+
+async function selectDayEntry(date_input, js_date) {
+    const month = js_date.toString().split(' ')[1];
+    const date = js_date.toString().split(' ')[2];
+    const year = js_date.toString().split(' ')[3];
+    const dateforModal = `${month} ${date}, ${year}?`
+    const reg_date = `${js_date.getFullYear()}-${js_date.getMonth() + 1}-${js_date.getDate()}`
+
+    const clickedStartDate = [reformatDate(formatToday(js_date))]
+    const today = new Date();
+    const todayDate = [reformatDate(formatToday(today))]
+
+    arraysMatch(clickedStartDate, todayDate)
+
+    if (arraysMatch(clickedStartDate, todayDate)) {
+        // alert(clickedStartDate)
+        // alert(todayDate)
+        const response = await fetch(`/api/journalentries/${date_input}`, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            document.location.replace(`/dashboard/newjournalentry/${reg_date}`);
+        } else {
+            document.location.replace(`/dashboard/journalentry/${date_input}`);
+        }
+
+    } else {
+        const response = await fetch(`/api/journalentries/${date_input}`, {
+            method: 'GET'
+        });
+
+        if (!response.ok) {
+            document.getElementById('modalDate').innerHTML = `${dateforModal}`
+            myModal.toggle()
+
+            yesBtn.addEventListener('click', function () {
+                document.location.replace(`/dashboard/newjournalentry/${reg_date}`);
+            })
+
+            return
+        } else {
+            document.location.replace(`/dashboard/journalentry/${date_input}`);
+        }
+    }
+
+    // if (today == js_date) {
+    //     console.log(js_date)
+    // } else {
+    //     console.log("not equal")
+    // }
+
+    // const response = await fetch(`/api/journalentries/${date_input}`, {
+    //     method: 'GET'
+    // });
+
+    // if (!response.ok) {
+    //     document.getElementById('modalDate').innerHTML = `${dateforModal}`
+    //     myModal.toggle()
+
+    //     yesBtn.addEventListener('click', function () {
+    //         document.location.replace(`/dashboard/newjournalentry/${reg_date}`);
+    //     })
+
+    //     return
+    // } else {
+    //     document.location.replace(`/dashboard/journalentry/${date_input}`);
+    // }
 }
 // Modal Script End
 
@@ -102,13 +157,13 @@ async function formattedDate(event) {
 
 
                 journal_entries = user.journalentries
-                console.log(journal_entries)
+                // console.log(journal_entries)
 
                 journal_entries.map(journalEntry => {
                     const formattedDate = reformatDate(journalEntry.reg_date);
                     formattedDatesArr.push(formattedDate)
                 })
-
+                console.log(formattedDatesArr)
 
                 // let formattedAndToday = formattedDatesArr.push(...startDate)
 
