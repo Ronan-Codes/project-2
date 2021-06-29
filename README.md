@@ -10,10 +10,11 @@
 2. [Technologies](#Technologies)
 3. [Installation](#Installation)
 4. [Usage](#Usage)
-5. [License](#License)
-6. [Contributing](#Contributing)
-7. [Author](#Author)
-8. [GitHub](#GitHub)
+5. [Screenshots](#Screenshots)
+6. [License](#License)
+7. [Contributing](#Contributing)
+8. [Author](#Author)
+9. [GitHub](#GitHub)
 
 ## Technologies
 * HTML
@@ -39,7 +40,31 @@
     * DB_PW='password'
 
 ## Usage
-<!-- Finish -->
+### Run Locally
+1. At application's root, connect to mysql and run "source db/schema.sql". (Creates life_balance_db).
+3. Initiate the server with "npm start".
+4. Visit http://localhost:3001/ in your browser (Preferred: Chrome / Safari)
+5. Now, you can sign-up/login, create journal-entries at specific dates, and edit/delete your journal-entries.
+
+### Heroku
+1. Visit the live site at [heroku](https://ronan-codes-self-care.herokuapp.com/)
+2. Now, you can sign-up/login, create journal-entries at specific dates, and edit/delete your journal-entries.
+
+## Screenshots
+1. Signup/Login
+![Screenshot 1](./public/images/sign-in.PNG)
+
+2. Date Picker
+![Screenshot 2](./public/images/entries.PNG)
+
+3. New Journal Entry
+![Screenshot 3](./public/images/new-entry.PNG)
+
+4. Update/Delete Existing Entry
+![Screenshot 4](./public/images/update.PNG)
+
+5. Updated Journal Entry
+![Screenshot 5](./public/images/updated.PNG)
 
 ## License
 This project is in the public domain and free for any and all users! For more information on this (un)licensing statement, visit https://unlicense.org/
