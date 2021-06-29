@@ -1,7 +1,3 @@
-var url_string = (window.location.href).toLowerCase();
-var url = new URL(url_string);
-var chosenDate = url.searchParams.get("reg_date");
-
 async function newEntryHandler(event) {
     event.preventDefault();
 
@@ -13,10 +9,6 @@ async function newEntryHandler(event) {
     const reg_date = window.location.toString().split('/')[
         window.location.toString().split('/').length - 1
     ];
-
-    // May be useful in the future if calendar functionality is modified.
-    // const reg_date = `${new Date().getFullYear()}-${new Date().getMonth() + 1}-${new Date().getDate()}`
-    // const reg_date = chosenDate
 
     const response = await fetch('/api/journalentries', {
         method: 'POST',

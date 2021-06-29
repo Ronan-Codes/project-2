@@ -1,5 +1,4 @@
 const id = document.getElementById('userIdContainer').getAttribute('data-id')
-// console.log(id)
 
 var yesBtn = document.getElementById('yesBtn');
 
@@ -29,7 +28,6 @@ function formatToday(date) {
 }
 
 const startDate = [reformatDate(formatToday(new Date))]
-// console.log(startDate)
 
 function todayOrNew(array) {
     if (array.includes(...startDate)) {
@@ -59,34 +57,48 @@ var arraysMatch = function (arr1, arr2) {
 
 };
 
-async function selectDayEntry(date_input, js_date) {
+async function selectDayEntry(date_input, yearFirst, js_date) {
     const month = js_date.toString().split(' ')[1];
     const date = js_date.toString().split(' ')[2];
     const year = js_date.toString().split(' ')[3];
     const dateforModal = `${month} ${date}, ${year}?`
-    const reg_date = `${js_date.getFullYear()}-${js_date.getMonth() + 1}-${js_date.getDate()}`
+    // const reg_date = `${js_date.getFullYear()}-${js_date.getMonth() + 1}-${js_date.getDate()}`
 
-    const clickedStartDate = [reformatDate(formatToday(js_date))]
+    const clickedDate = [reformatDate(formatToday(js_date))]
     const today = new Date();
     const todayDate = [reformatDate(formatToday(today))]
+    // alert(clickedDate)
+    // alert(todayDate)
 
-    arraysMatch(clickedStartDate, todayDate)
+    arraysMatch(clickedDate, todayDate)
+    // alert(date_input)
 
-    if (arraysMatch(clickedStartDate, todayDate)) {
-        // alert(clickedStartDate)
+    if (arraysMatch(clickedDate, todayDate)) {
+        // alert(clickedDate)
         // alert(todayDate)
-        const response = await fetch(`/api/journalentries/${date_input}`, {
+        // const response = await fetch(`/api/users/${id}`, {
+        //     method: 'GET'
+        // });
+
+        // if (response.ok) {
+        //     response.json().then(function (user) {
+        //     journal_entries = user.journalentries
+
+        //     document.location.replace(`/dashboard/journalentry/${id}`);
+        //     })
+        // }
+        const response = await fetch(`/api/journalentries/${id}/${yearFirst}`, {
             method: 'GET'
         });
 
-        if (!response.ok) {
-            document.location.replace(`/dashboard/newjournalentry/${reg_date}`);
+        if (response.ok) {
+            document.location.replace(`/dashboard/journalentry/${id}/${yearFirst}`);
         } else {
-            document.location.replace(`/dashboard/journalentry/${date_input}`);
+            document.location.replace(`/dashboard/newjournalentry/${yearFirst}`);
         }
 
     } else {
-        const response = await fetch(`/api/journalentries/${date_input}`, {
+        const response = await fetch(`/api/journalentries/${id}/${yearFirst}`, {
             method: 'GET'
         });
 
@@ -95,20 +107,14 @@ async function selectDayEntry(date_input, js_date) {
             myModal.toggle()
 
             yesBtn.addEventListener('click', function () {
-                document.location.replace(`/dashboard/newjournalentry/${reg_date}`);
+                document.location.replace(`/dashboard/newjournalentry/${yearFirst}`);
             })
 
             return
         } else {
-            document.location.replace(`/dashboard/journalentry/${date_input}`);
+            document.location.replace(`/dashboard/journalentry/${id}/${yearFirst}`);
         }
     }
-
-    // if (today == js_date) {
-    //     console.log(js_date)
-    // } else {
-    //     console.log("not equal")
-    // }
 
     // const response = await fetch(`/api/journalentries/${date_input}`, {
     //     method: 'GET'
@@ -130,7 +136,6 @@ async function selectDayEntry(date_input, js_date) {
 // Modal Script End
 
 async function formattedDate(event) {
-
     const response = await fetch(`/api/users/${id}`, {
         method: 'GET'
     });
@@ -157,13 +162,12 @@ async function formattedDate(event) {
 
 
                 journal_entries = user.journalentries
-                // console.log(journal_entries)
 
                 journal_entries.map(journalEntry => {
                     const formattedDate = reformatDate(journalEntry.reg_date);
                     formattedDatesArr.push(formattedDate)
                 })
-                console.log(formattedDatesArr)
+                // console.log(formattedDatesArr[0], "for modal")
 
                 // let formattedAndToday = formattedDatesArr.push(...startDate)
 
@@ -176,8 +180,8 @@ async function formattedDate(event) {
                     custom_classes: {
                         'myclass1': formattedDatesArr
                     },
-                    onSelect: function (reg_date, date_time, js_date) {
-                        selectDayEntry(reg_date, js_date)
+                    onSelect: function (reg_date, yearFirst, js_date) {
+                        selectDayEntry(reg_date, yearFirst, js_date)
                     }
                 })
             // }

@@ -40,15 +40,13 @@ router.get('/home', withAuth, (req, res) => {
         });
 });
 
-router.get('/journalentry/:reg_date', withAuth, (req, res) => {
+router.get('/journalentry/:id/:date', withAuth, (req, res) => {
     JournalEntry.findOne({
             where: {
                 // use the ID from the session
-                reg_date: req.params.reg_date
+                user_id: req.params.id,
+                reg_date: req.params.date
             },
-            attributes: [
-                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'user_id', 'reg_date'
-            ],
             include: [{
                 model: User,
             }]
@@ -77,13 +75,7 @@ router.get('/journalentry/:reg_date', withAuth, (req, res) => {
         });
 })
 
-// router.get('/newjournalentry', (req, res) => {
-//     res.render('newjournalentry', {
-//         loggedIn: req.session.loggedIn
-//     })
-// })
-
-router.get('/newjournalentry/:reg_date', (req, res) => {
+router.get('/newjournalentry/:reg_date', withAuth, (req, res) => {
     res.render('newjournalentry', {
         loggedIn: req.session.loggedIn
     })

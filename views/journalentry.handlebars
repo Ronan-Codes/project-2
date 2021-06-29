@@ -1,7 +1,7 @@
 <main class="dashboard-entry-wrapper col-11 col-md-10 row justify-content-center text-center py-5 pt-4 mt-0 text-light rounded">
+    <div id="userIdContainer" data-id="{{journalEntry.user_id}}" style="display:none"></div>
     <div class="col-12 mb-3">
-        <h2 class="">
-            Journal Entry <span class="h5">{{format_date journalEntry.reg_date}}</span>
+        <h2 id="entryDateContainer">
         </h2>
     </div>
 
@@ -24,6 +24,7 @@
     </div>
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/javascript/display-date.js"></script>
 <script src="/javascript/back.js"></script>
-<script src="/javascript/delete-journal-entry.js"></script>
 <script src="/javascript/update-journal-entry.js"></script>

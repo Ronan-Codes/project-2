@@ -42,7 +42,7 @@ JournalEntry.init(
         reg_date: {
             type: DataTypes.DATEONLY,
             allowNull: false,
-            unique: true
+            // unique: true
             // ,
             // get: function() {
             //     return moment.utc(this.getDataValue('regDate')).format('YYYY-MM-DD');

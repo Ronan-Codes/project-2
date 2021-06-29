@@ -25,16 +25,13 @@ router.get('/', (req, res) => {
             res.status(500).json(err);
         });
 });
-// watch video at 13.3.6 to review process of include (JOIN)
 
-router.get('/:reg_date', (req, res) => {
+router.get('/:user_id/:reg_date', (req, res) => {
     JournalEntry.findOne({
             where: {
-                reg_date: req.params.reg_date
+                reg_date: req.params.reg_date,
+                user_id: req.params.user_id
             },
-            attributes: [
-                'id', 'first_grateful_input', 'second_grateful_input', 'third_grateful_input', 'freewrite_input', 'mood_input', 'user_id', 'reg_date'
-            ],
             include: [{
                 model: User,
             }]
@@ -52,7 +49,7 @@ router.get('/:reg_date', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
-});
+})
 
 router.post('/', withAuth, (req, res) => {
     JournalEntry.create({
@@ -71,11 +68,11 @@ router.post('/', withAuth, (req, res) => {
         });
 });
 
-
-router.put('/:reg_date', withAuth, (req, res) => {
+router.put('/:user_id/:reg_date', withAuth, (req, res) => {
     JournalEntry.update(req.body, {
             where: {
-                reg_date: req.params.reg_date
+                reg_date: req.params.reg_date,
+                user_id: req.session.user_id
             }
         })
         .then(dbJournalEntryData => {
@@ -93,10 +90,11 @@ router.put('/:reg_date', withAuth, (req, res) => {
         });
 });
 
-router.delete('/:reg_date', withAuth, (req, res) => {
+router.delete('/:user_id/:reg_date', withAuth, (req, res) => {
     JournalEntry.destroy({
             where: {
-                reg_date: req.params.reg_date
+                reg_date: req.params.reg_date,
+                user_id: req.session.user_id
             }
         })
         .then(dbJournalEntryData => {
