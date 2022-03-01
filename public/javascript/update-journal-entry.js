@@ -24,6 +24,7 @@ async function newEntryHandler(event) {
         headers: {
             'Content-Type': 'application/json'
         }
+        // In responses, a Content-Type header provides the client with the actual content type of the returned content.
     });
 
     if (response.ok) {

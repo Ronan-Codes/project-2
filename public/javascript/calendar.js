@@ -1,3 +1,6 @@
+// Used by dashboard.handlebars
+
+// id manually passed as if similar to props
 const id = document.getElementById('userIdContainer').getAttribute('data-id')
 
 var yesBtn = document.getElementById('yesBtn');
@@ -27,8 +30,12 @@ function formatToday(date) {
     return [year, month, day].join('-');
 }
 
+// utilizes the two functions above. Creates a new date for current day that is reformatted by formatToday(), then reformatted again by reformatDate()
+    // Only purpose of reformatting of date, is to be able to compare it date formatting of "zebra_datepicker"
 const startDate = [reformatDate(formatToday(new Date))]
 
+// Determines if the calendar button says Today's Entry or New Entry
+    // todayOrNew utilized in #datepicker function at bottom of page. Basically customizes text of "today button" through "show_select_today: todayOrNew(formattedDatesArr)""
 function todayOrNew(array) {
     if (array.includes(...startDate)) {
         return "Today's Entry"
@@ -62,124 +69,92 @@ async function selectDayEntry(date_input, yearFirst, js_date) {
     const date = js_date.toString().split(' ')[2];
     const year = js_date.toString().split(' ')[3];
     const dateforModal = `${month} ${date}, ${year}?`
-    // const reg_date = `${js_date.getFullYear()}-${js_date.getMonth() + 1}-${js_date.getDate()}`
 
     const clickedDate = [reformatDate(formatToday(js_date))]
     const today = new Date();
     const todayDate = [reformatDate(formatToday(today))]
-    // alert(clickedDate)
-    // alert(todayDate)
 
     arraysMatch(clickedDate, todayDate)
-    // alert(date_input)
 
+    // Checks if clicked date is same as user's current day.
     if (arraysMatch(clickedDate, todayDate)) {
-        // alert(clickedDate)
-        // alert(todayDate)
-        // const response = await fetch(`/api/users/${id}`, {
-        //     method: 'GET'
-        // });
-
-        // if (response.ok) {
-        //     response.json().then(function (user) {
-        //     journal_entries = user.journalentries
-
-        //     document.location.replace(`/dashboard/journalentry/${id}`);
-        //     })
-        // }
+        // Checks if there is journal entry for "today"
         const response = await fetch(`/api/journalentries/${id}/${yearFirst}`, {
             method: 'GET'
         });
 
+        // if there is, render journalentry.handlebars through dashboard-routes.js
         if (response.ok) {
             document.location.replace(`/dashboard/journalentry/${id}/${yearFirst}`);
         } else {
             document.location.replace(`/dashboard/newjournalentry/${yearFirst}`);
         }
+        // else render newjournalentry.handlebars through dashboard-routes.js
 
+    // Else if clicked date is not "today" (Past only, since future is restricted), check if that day has journal entry again (same as above)
     } else {
+
+        // Checks if there is journal entry for "past date"
         const response = await fetch(`/api/journalentries/${id}/${yearFirst}`, {
             method: 'GET'
         });
 
+        // if there is no journal entry in the selected date (not current day), toggle modal asking if user wants to create a journal entry 
         if (!response.ok) {
             document.getElementById('modalDate').innerHTML = `${dateforModal}`
             myModal.toggle()
 
+            // clicking Yes renders newjournalentry.handlebars with journal entry data specific for the clicked date
             yesBtn.addEventListener('click', function () {
                 document.location.replace(`/dashboard/newjournalentry/${yearFirst}`);
             })
 
             return
         } else {
+            // else if there is entry on selected past date (not current day), render journalentry.handlebars with journal entry for selected date
             document.location.replace(`/dashboard/journalentry/${id}/${yearFirst}`);
         }
     }
-
-    // const response = await fetch(`/api/journalentries/${date_input}`, {
-    //     method: 'GET'
-    // });
-
-    // if (!response.ok) {
-    //     document.getElementById('modalDate').innerHTML = `${dateforModal}`
-    //     myModal.toggle()
-
-    //     yesBtn.addEventListener('click', function () {
-    //         document.location.replace(`/dashboard/newjournalentry/${reg_date}`);
-    //     })
-
-    //     return
-    // } else {
-    //     document.location.replace(`/dashboard/journalentry/${date_input}`);
-    // }
 }
 // Modal Script End
 
 async function formattedDate(event) {
+    // Get specific user data with id, stated at top of this file
     const response = await fetch(`/api/users/${id}`, {
         method: 'GET'
     });
 
     if (response.ok) {
+        // if there are journal entries, use "".json().then" to utilize fetched data
         response.json().then(function (user) {
-            // Keep comments for now, in case calendar functionality is reverted
-            // if (journalEntries.length == 0) {
-            //     $('#datepicker').Zebra_DatePicker({
-            //         show_select_today: "Today's Entry",
-            //         show_clear_date: false,
-            //         always_visible: $('.datepickerContainer'),
-            //         // disabled_dates: ['* * *'],
-            //         // enabled_dates: startDate,
-            //         onSelect: function (reg_date, date_time, js_date) {
-            //             // selectDayEntry(reg_date)
-            //             document.location.replace(`/dashboard/newjournalentry`);
-
-            //         }
-            //     })
-            // } else {
-                // console.log(req.session.user_id)
-                // for loop or map each journalEntries
-
-
+            
                 journal_entries = user.journalentries
 
+                // for each journal entry, reformat date and push to formattedDatesArr
                 journal_entries.map(journalEntry => {
                     const formattedDate = reformatDate(journalEntry.reg_date);
                     formattedDatesArr.push(formattedDate)
                 })
-                // console.log(formattedDatesArr[0], "for modal")
 
-                // let formattedAndToday = formattedDatesArr.push(...startDate)
-
+                // Zebra Datepicker specific functions: "https://github.com/stefangabos/Zebra_Datepicker"
                 $('#datepicker').Zebra_DatePicker({
+                    // todayOrNew() customizes today button to render either Today's Entry or New Entry
                     show_select_today: todayOrNew(formattedDatesArr),
+                    // disables Clear button
                     show_clear_date: false,
+                    // calendar is always visible
                     always_visible: $('.datepickerContainer'),
+
                     // disabled_dates: ['* * *'],
                     // enabled_dates: formattedDatesArr,
+
                     custom_classes: {
                         'myclass1': formattedDatesArr
                     },
+                    
+                    // On selection of a date, run selectDayEntry(). 
+                        // Summary: Checks if clicked date is "today" or "past". For each option, fetch user's journal entry. 
+                            // If available, render journalentry.handlebars. Else render newjournalentry.handlebars. Routes from dashboard-routes
                     onSelect: function (reg_date, yearFirst, js_date) {
                         selectDayEntry(reg_date, yearFirst, js_date)
                     }

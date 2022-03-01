@@ -25,7 +25,7 @@ router.get('/home', withAuth, (req, res) => {
             }]
         })
         .then(dbUserData => {
-            // serialize data before passing to template
+            // serialize data before passing/access to template(dashboard.handlebars)
             const userData = dbUserData.get({
                 plain: true
             });

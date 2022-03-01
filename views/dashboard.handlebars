@@ -6,7 +6,9 @@
         </h2>
     </div>
 
+    {{!-- Manually included id, to be utilized in calendar.js functions --}}
     <div id="userIdContainer" data-id="{{userData.id}}" style="display:none"></div>
+
     <div class="col-12 col-sm-10 col-md-10 col-xxl-6 datepickerContainer row mx-0 px-0 mt-md-5">
         <div type="text" id="datepicker" class="col-12"></div>
     </div>
@@ -19,23 +21,13 @@
                     <h6 class="modal-title text-secondary" id="chosenDateModalLabel">
                         Would you like to create a journal entry for <span class="text-secondary" id="modalDate"></span>
                     </h6>
-                    {{!-- <h6 class="modal-title text-secondary" id="chosenDateModalLabel">
-                        No journal entry found for <span class="text-secondary" id="modalDate"></span> Would you like to create one for it?
-                    </h6> --}}
+                    
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                {{!-- <div class="modal-body text-secondary">
-                    No journal entry found for ${date}. Would you like to create one for it?
-                </div> --}}
+                
                 <div class="modal-footer row justify-content-center">
-                    {{!-- <div class="col-12 row justify-content-center"> --}}
                         <button type="button" class="col-6 btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button id="yesBtn" type="button" class="col-6 btn btn-sm btn-secondary">Yes</button>
-                    {{!-- </div> --}}
-
-                    {{!-- <div class="col-12">
-                         <button id="yesBtn" type="button" class="btn btn-primary">Yes</button>
-                    </div> --}}
                 </div>
             </div>
         </div>

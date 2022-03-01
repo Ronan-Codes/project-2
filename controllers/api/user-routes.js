@@ -1,4 +1,6 @@
 const router = require('express').Router();
+// Router method of Express
+
 const {
   User,
   JournalEntry
@@ -11,9 +13,11 @@ router.get('/', (req, res) => {
   User.findAll({
       attributes: {
         exclude: ['password']
+        // exclude password for security purposes
       }
     })
     .then(dbUserData => res.json(dbUserData))
+    // returns a promise which resolves with the result of parsing the body text as JSON
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -40,6 +44,7 @@ router.get('/:id', (req, res) => {
       if (!dbUserData) {
         res.status(404).json({
           message: 'No user found with this id'
+          // user able to communicate w/ server, but invalid input 
         });
         return;
       }
@@ -123,6 +128,7 @@ router.put('/:id', (req, res) => {
   // pass in req.body instead to only update what's passed through
   User.update(req.body, {
       individualHooks: true,
+      // refer to beforeUpdate hook in models/User.js
       where: {
         id: req.params.id
       }
